@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Detector</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 75%; /* 4:3 aspect ratio */
+            margin-bottom: 20px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .video-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+        }
+        .output {
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 60px;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1.2em;
+            color: #34495e;
+        }
+        #error-message {
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign Language Detector</h1>
+        <div class="video-container">
+            <img id="video-feed" src="{{ url_for('video_feed') }}" alt="Video feed">
+        </div>
+        <div id="error-message"></div>
+        <div class="output" id="text-output"></div>
+    </div>
+
+    <script>
+        const videoFeed = document.getElementById('video-feed');
+        const errorMessage = document.getElementById('error-message');
+
+        videoFeed.onerror = function() {
+            errorMessage.textContent = "Error loading video feed. Please check your camera connection.";
+        };
+
+        videoFeed.onload = function() {
+            errorMessage.textContent = "";
+        };
+    </script>
+</body>
+</html>
